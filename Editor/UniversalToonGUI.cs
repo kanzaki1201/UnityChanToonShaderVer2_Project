@@ -91,6 +91,8 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
         const string ShaderPropIs_BLD = "_Is_BLD";
         const string ShaderPropInverse_Z_Axis_BLD = "_Inverse_Z_Axis_BLD";
 
+        const string ShaderPropUseNormalMapObjectSpace = "_Use_NormalMap_Object_Space";
+
         const string ShaderDefineIS_OUTLINE_CLIPPING_NO = "_IS_OUTLINE_CLIPPING_NO";
         const string ShaderDefineIS_OUTLINE_CLIPPING_YES = "_IS_OUTLINE_CLIPPING_YES";
 
@@ -231,6 +233,7 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
         MaterialProperty secondShadeMap = null;
         MaterialProperty secondShadeColor = null;
         MaterialProperty normalMap = null;
+        MaterialProperty normalMapOS = null;
         MaterialProperty bumpScale = null;
         MaterialProperty set_1st_ShadePosition = null;
         MaterialProperty set_2nd_ShadePosition = null;
@@ -390,6 +393,7 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
             secondShadeMap = FindProperty("_2nd_ShadeMap", props);
             secondShadeColor = FindProperty("_2nd_ShadeColor", props);
             normalMap = FindProperty("_NormalMap", props);
+            normalMapOS = FindProperty("_NormalMapOS", props);
             bumpScale = FindProperty("_BumpScale", props);
             set_1st_ShadePosition = FindProperty("_Set_1st_ShadePosition", props, false);
             set_2nd_ShadePosition = FindProperty("_Set_2nd_ShadePosition", props, false);
@@ -536,6 +540,7 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
             public static GUIContent firstShadeColorText = new GUIContent("1st ShadeMap", "1st ShadeColor : Texture(sRGB) × Color(RGB) Default:White");
             public static GUIContent secondShadeColorText = new GUIContent("2nd ShadeMap", "2nd ShadeColor : Texture(sRGB) × Color(RGB) Default:White");
             public static GUIContent normalMapText = new GUIContent("NormalMap", "NormalMap : Texture(bump)");
+            public static GUIContent normalMapOSText = new GUIContent("NormalMap Object Space", "NormalMapObjectSpace : Texture");
             public static GUIContent highColorText = new GUIContent("HighColor", "High Color : Texture(sRGB) × Color(RGB) Default:Black");
             public static GUIContent highColorMaskText = new GUIContent("HighColor Mask", "HighColor Mask : Texture(linear)");
             public static GUIContent rimLightMaskText = new GUIContent("RimLight Mask", "RimLight Mask : Texture(linear)");
@@ -977,7 +982,7 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
 
             if (_Transparent_Setting == _UTS_Transparent.On)
             {
-                if ( material.GetInt(ShaderPropUtsTechniqe) == (int)_UTS_Technique.DoubleShadeWithFeather )
+                if (material.GetInt(ShaderPropUtsTechniqe) == (int)_UTS_Technique.DoubleShadeWithFeather)
                 {
                     material.SetInt(ShaderPropClippingMode, (int)_UTS_ClippingMode.TransClippingMode);
                 }
@@ -1301,6 +1306,11 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
                 m_MaterialEditor.TexturePropertySingleLine(Styles.normalMapText, normalMap, bumpScale);
                 m_MaterialEditor.TextureScaleOffsetProperty(normalMap);
 
+
+                //GUILayout.Label("NormalMap Settings", EditorStyles.boldLabel);
+                m_MaterialEditor.TexturePropertySingleLine(Styles.normalMapOSText, normalMapOS, bumpScale);
+                m_MaterialEditor.TextureScaleOffsetProperty(normalMapOS);
+
                 //EditorGUI.indentLevel++;
 
                 GUILayout.Label("NormalMap Effectiveness", EditorStyles.boldLabel);
@@ -1357,6 +1367,26 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
                     if (GUILayout.Button(STR_ONSTATE, shortButtonStyle))
                     {
                         material.SetFloat(ShaderPropIsNormalMapToRimLight, 0);
+                    }
+                }
+
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.PrefixLabel("Is Object Space");
+                //GUILayout.Space(60);
+                if (material.GetFloat(ShaderPropUseNormalMapObjectSpace) == 0)
+                {
+                    if (GUILayout.Button(STR_OFFSTATE, shortButtonStyle))
+                    {
+                        material.SetFloat(ShaderPropUseNormalMapObjectSpace, 1);
+                    }
+                }
+                else
+                {
+                    if (GUILayout.Button(STR_ONSTATE, shortButtonStyle))
+                    {
+                        material.SetFloat(ShaderPropUseNormalMapObjectSpace, 0);
                     }
                 }
                 EditorGUILayout.EndHorizontal();

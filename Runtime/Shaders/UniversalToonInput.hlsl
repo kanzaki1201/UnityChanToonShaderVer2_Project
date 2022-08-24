@@ -27,6 +27,7 @@ fixed _Is_LightColor_2nd_Shade;
 float4 _NormalMap_ST;
 
 fixed _Is_NormalMapToBase;
+fixed _Use_NormalMap_Object_Space;
 fixed _Set_SystemShadowsToBase;
 float _Tweak_SystemShadowsLevel;
 float _BaseColor_Step;
