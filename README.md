@@ -4,6 +4,10 @@
 
 ***Read this document in [日本語版](README_ja.md)***  
 
+## This is Kanzaki's fork for making object space normal work lol
+### TODO list:
+ - [ ] Object space normal
+
 ## 【Overview : What is UTS/UniversalToon?】
 
 <img width = "800" src="Documentation~/Images_jpg/TPK_04.jpg">
