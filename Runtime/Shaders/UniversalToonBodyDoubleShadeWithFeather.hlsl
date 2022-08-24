@@ -13,6 +13,15 @@
                 i.normalDir = normalize(i.normalDir);
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
 
+
+                if(_Use_NormalMap_Object_Space){
+
+                    half4 normalRGB = SAMPLE_TEXTURE2D(_NormalMapOS, sampler_MainTex, i.uv0);
+                    half3 normalOS = normalize(lerp(half3(-1, -1, -1), half3(1, 1, 1), normalRGB.xyz + half3(0, 0, 1) * 0));
+                    // normalLocal = normalOS;
+                    i.normalDir = normalize(TransformObjectToWorldNormal(normalOS));
+                }
+
                 float3x3 tangentTransform = float3x3( i.tangentDir, i.bitangentDir, i.normalDir);
 
                 float2 Set_UV0 = i.uv0;
@@ -22,7 +31,6 @@
 
                 float3 normalLocal = _NormalMap_var.rgb;
                 float3 normalDirection = normalize(mul( normalLocal, tangentTransform )); // Perturbed normals
-
 
                 // todo. not necessary to calc gi factor in  shadowcaster pass.
                 SurfaceData surfaceData;
