@@ -6,7 +6,7 @@
 
 ## This is Kanzaki's fork for making object space normal work lol
 ### TODO list:
- - [ ] Object space normal
+ - [x] Object space normal
 
 ## 【Overview : What is UTS/UniversalToon?】
 
