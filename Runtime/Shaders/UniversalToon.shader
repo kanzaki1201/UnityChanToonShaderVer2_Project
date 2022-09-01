@@ -213,6 +213,9 @@ Shader "Universal Render Pipeline/Toon" {
         _Offset_X_Axis_BLD (" Offset X-Axis (Built-in Light Direction)", Range(-1, 1)) = -0.05
         _Offset_Y_Axis_BLD (" Offset Y-Axis (Built-in Light Direction)", Range(-1, 1)) = 0.09
         [Toggle(_)] _Inverse_Z_Axis_BLD (" Inverse Z-Axis (Built-in Light Direction)", Float ) = 1
+
+
+        [Toggle(_)] _Show_Vertex_Color_Only ("Show_Vertex_Color_Only", Float ) = 0
     }
     SubShader {
         Tags {

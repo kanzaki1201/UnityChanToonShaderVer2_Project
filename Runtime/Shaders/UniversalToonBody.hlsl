@@ -94,6 +94,7 @@
                 float3 normal : NORMAL;
                 float4 tangent : TANGENT;
                 float2 texcoord0 : TEXCOORD0;
+                float4 vertexColor : COLOR;
 
 
 #ifdef _IS_ANGELRING_OFF
@@ -105,6 +106,7 @@
             UNITY_VERTEX_INPUT_INSTANCE_ID
             };
             struct VertexOutput {
+                float4 vertexColor : COLOR;
                 float4 pos : SV_POSITION;
                 float2 uv0 : TEXCOORD0;
 //v.2.0.4
@@ -390,6 +392,7 @@
                 o.tangentDir = normalize( mul( unity_ObjectToWorld, float4( v.tangent.xyz, 0.0 ) ).xyz );
                 o.bitangentDir = normalize(cross(o.normalDir, o.tangentDir) * v.tangent.w);
                 o.posWorld = mul(unity_ObjectToWorld, v.vertex);
+                o.vertexColor = v.vertexColor;
 
                 o.pos = UnityObjectToClipPos( v.vertex );
                 //v.2.0.7 Detection of the inside the mirror (right or left-handed) o.mirrorFlag = -1 then "inside the mirror".

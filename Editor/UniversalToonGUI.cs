@@ -92,6 +92,7 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
         const string ShaderPropInverse_Z_Axis_BLD = "_Inverse_Z_Axis_BLD";
 
         const string ShaderPropUseNormalMapObjectSpace = "_Use_NormalMap_Object_Space";
+        const string ShaderPropShowVertexColorOnly = "_Show_Vertex_Color_Only";
 
         const string ShaderDefineIS_OUTLINE_CLIPPING_NO = "_IS_OUTLINE_CLIPPING_NO";
         const string ShaderDefineIS_OUTLINE_CLIPPING_YES = "_IS_OUTLINE_CLIPPING_YES";
@@ -102,6 +103,7 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
 
         const string ShaderDefineIS_TRANSCLIPPING_OFF = "_IS_TRANSCLIPPING_OFF";
         const string ShaderDefineIS_TRANSCLIPPING_ON = "_IS_TRANSCLIPPING_ON";
+
 
 
         const string STR_ONSTATE = "Active";
@@ -1132,6 +1134,24 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
                 EditorGUILayout.HelpBox("UTS2 : Unused Material Properties and ShaderKeywords are removed.",MessageType.Info);
             }
 #endif
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.PrefixLabel("Show Vertex Color Only");
+            //GUILayout.Space(60);
+            if (material.GetFloat(ShaderPropShowVertexColorOnly) == 0)
+            {
+                if (GUILayout.Button(STR_OFFSTATE, middleButtonStyle))
+                {
+                    material.SetInt(ShaderPropShowVertexColorOnly, 1);
+                }
+            }
+            else
+            {
+                if (GUILayout.Button(STR_ONSTATE, middleButtonStyle))
+                {
+                    material.SetInt(ShaderPropShowVertexColorOnly, 0);
+                }
+            }
+            EditorGUILayout.EndHorizontal();
             //
         }
 

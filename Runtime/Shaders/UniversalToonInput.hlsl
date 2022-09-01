@@ -172,6 +172,8 @@ fixed _Is_BakedNormal;
 
 float _ZOverDrawMode;
 
+fixed _Show_Vertex_Color_Only;
+
 //
 // 
 //

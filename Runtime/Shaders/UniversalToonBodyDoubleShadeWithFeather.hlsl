@@ -8,11 +8,14 @@
 
         float4 fragDoubleShadeFeather(VertexOutput i, fixed facing : VFACE) : SV_TARGET 
         {
+                if(_Show_Vertex_Color_Only){
+                    return i.vertexColor;
+                }
+
                 i.normalDir = normalize(i.normalDir);
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
 
                 if(_Use_NormalMap_Object_Space){
-
                     half4 normalRGB = SAMPLE_TEXTURE2D(_NormalMapOS, sampler_MainTex, i.uv0);
                     half3 normalOS = normalize(lerp(half3(-1, -1, -1), half3(1, 1, 1), normalRGB.xyz + half3(0, 0, 1) * 0));
                     i.normalDir = TransformObjectToWorldNormal(normalOS);
