@@ -33,6 +33,7 @@ fixed _Set_SystemShadowsToBase;
 float _Tweak_SystemShadowsLevel;
 float _BaseColor_Step;
 float _BaseShade_Feather;
+float _NormalMap_Object_Space_Step;
 
 float4 _Set_1st_ShadePosition_ST;
 float _ShadeColor_Step;

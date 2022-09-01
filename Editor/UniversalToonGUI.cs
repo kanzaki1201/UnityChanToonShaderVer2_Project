@@ -92,7 +92,9 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
         const string ShaderPropInverse_Z_Axis_BLD = "_Inverse_Z_Axis_BLD";
 
         const string ShaderPropUseNormalMapObjectSpace = "_Use_NormalMap_Object_Space";
+
         const string ShaderPropShowVertexColorOnly = "_Show_Vertex_Color_Only";
+        const string ShaderPropNormalMapObjectSpaceStep = "_NormalMap_Object_Space_Step";
 
         const string ShaderDefineIS_OUTLINE_CLIPPING_NO = "_IS_OUTLINE_CLIPPING_NO";
         const string ShaderDefineIS_OUTLINE_CLIPPING_YES = "_IS_OUTLINE_CLIPPING_YES";
@@ -306,6 +308,7 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
         MaterialProperty unlit_Intensity = null;
         MaterialProperty offset_X_Axis_BLD = null;
         MaterialProperty offset_Y_Axis_BLD = null;
+        MaterialProperty normalMap_Object_Space_Step = null;
         //------------------------------------------------------
 
         MaterialEditor m_MaterialEditor;
@@ -397,6 +400,7 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
             secondShadeColor = FindProperty("_2nd_ShadeColor", props);
             normalMap = FindProperty("_NormalMap", props);
             normalMapOS = FindProperty("_NormalMapOS", props);
+            normalMap_Object_Space_Step = FindProperty("_NormalMap_Object_Space_Step", props);
             bumpScale = FindProperty("_BumpScale", props);
             set_1st_ShadePosition = FindProperty("_Set_1st_ShadePosition", props, false);
             set_2nd_ShadePosition = FindProperty("_Set_2nd_ShadePosition", props, false);
@@ -1403,9 +1407,6 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
             _AdvancedFaceShadow_Foldout = FoldoutSubMenu(_AdvancedFaceShadow_Foldout, "● Advanced Face Shadow");
             if (_AdvancedFaceShadow_Foldout)
             {
-                m_MaterialEditor.TexturePropertySingleLine(Styles.normalMapOSText, normalMapOS, bumpScale);
-                m_MaterialEditor.TextureScaleOffsetProperty(normalMapOS);
-
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.PrefixLabel("Is Object Space");
                 //GUILayout.Space(60);
@@ -1424,6 +1425,11 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
                     }
                 }
                 EditorGUILayout.EndHorizontal();
+                if (material.GetFloat(ShaderPropUseNormalMapObjectSpace) == 1)
+                {
+                    m_MaterialEditor.TexturePropertySingleLine(Styles.normalMapOSText, normalMapOS);
+                    m_MaterialEditor.RangeProperty(normalMap_Object_Space_Step, "Color Step");
+                }
 
                 EditorGUILayout.Space();
             }
