@@ -203,6 +203,7 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
         static bool _BasicShaderSettings_Foldout = false;
         static bool _BasicThreeColors_Foldout = true;
         static bool _NormalMap_Foldout = false;
+        static bool _AdvancedFaceShadow_Foldout = false;
         static bool _ShadowControlMaps_Foldout = false;
         static bool _StepAndFeather_Foldout = true;
         static bool _AdditionalLookdevs_Foldout = false;
@@ -1326,11 +1327,6 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
                 m_MaterialEditor.TexturePropertySingleLine(Styles.normalMapText, normalMap, bumpScale);
                 m_MaterialEditor.TextureScaleOffsetProperty(normalMap);
 
-
-                //GUILayout.Label("NormalMap Settings", EditorStyles.boldLabel);
-                m_MaterialEditor.TexturePropertySingleLine(Styles.normalMapOSText, normalMapOS, bumpScale);
-                m_MaterialEditor.TextureScaleOffsetProperty(normalMapOS);
-
                 //EditorGUI.indentLevel++;
 
                 GUILayout.Label("NormalMap Effectiveness", EditorStyles.boldLabel);
@@ -1392,6 +1388,24 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
 
                 EditorGUILayout.EndHorizontal();
 
+
+                //EditorGUI.indentLevel--;
+                EditorGUILayout.Space();
+            }
+
+            _ShadowControlMaps_Foldout = FoldoutSubMenu(_ShadowControlMaps_Foldout, "● Shadow Control Maps");
+            if (_ShadowControlMaps_Foldout)
+            {
+                GUI_ShadowControlMaps(material);
+                EditorGUILayout.Space();
+            }
+
+            _AdvancedFaceShadow_Foldout = FoldoutSubMenu(_AdvancedFaceShadow_Foldout, "● Advanced Face Shadow");
+            if (_AdvancedFaceShadow_Foldout)
+            {
+                m_MaterialEditor.TexturePropertySingleLine(Styles.normalMapOSText, normalMapOS, bumpScale);
+                m_MaterialEditor.TextureScaleOffsetProperty(normalMapOS);
+
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.PrefixLabel("Is Object Space");
                 //GUILayout.Space(60);
@@ -1411,14 +1425,6 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
                 }
                 EditorGUILayout.EndHorizontal();
 
-                //EditorGUI.indentLevel--;
-                EditorGUILayout.Space();
-            }
-
-            _ShadowControlMaps_Foldout = FoldoutSubMenu(_ShadowControlMaps_Foldout, "● Shadow Control Maps");
-            if (_ShadowControlMaps_Foldout)
-            {
-                GUI_ShadowControlMaps(material);
                 EditorGUILayout.Space();
             }
         }
