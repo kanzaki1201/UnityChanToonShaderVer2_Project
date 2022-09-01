@@ -76,8 +76,10 @@ Shader "Universal Render Pipeline/Toon" {
         _NormalMap ("NormalMap", 2D) = "bump" {}
         _BumpScale ("Normal Scale", Range(0, 1)) = 1
         [Toggle(_)] _Is_NormalMapToBase ("Is_NormalMapToBase", Float ) = 0
-        [Toggle(_)] _Use_NormalMap_Object_Space ("Use_NormalMap_Object_Space", Float ) = 0
-        _NormalMapOS ("NormalMapOS", 2D) = "white" {}
+        [Toggle(_)] _NormalMap_Object_Space_Use ("NormalMap_Object_Space_Use", Float ) = 0
+        [Toggle(_)] _NormalMap_Object_Space_Use_Step ("NormalMap_Object_Space_Use_Step", Float ) = 0
+        _NormalMap_Object_Space ("NormalMap_Object_Space", 2D) = "white" {}
+        _NormalMap_Object_Space_Step ("NormalMap_Object_Space_Step", Range(100, 1)) = 10
         //v.2.0.4.4
         [Toggle(_)] _Set_SystemShadowsToBase ("Set_SystemShadowsToBase", Float ) = 1
         _Tweak_SystemShadowsLevel ("Tweak_SystemShadowsLevel", Range(-0.5, 0.5)) = 0

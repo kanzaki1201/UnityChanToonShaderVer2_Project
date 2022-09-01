@@ -15,9 +15,28 @@
                 i.normalDir = normalize(i.normalDir);
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
 
-                if(_Use_NormalMap_Object_Space){
-                    half4 normalRGB = SAMPLE_TEXTURE2D(_NormalMapOS, sampler_MainTex, i.uv0);
-                    half3 normalOS = normalize(lerp(half3(-1, -1, -1), half3(1, 1, 1), normalRGB.xyz + half3(0, 0, 1) * 0));
+                if(_NormalMap_Object_Space_Use){
+                    
+                    half4 normalRGB = 1;
+
+                    // Prevent acne by biasing the coloring value
+                    if(_NormalMap_Object_Space_Use_Step){
+                        int roundBias = _NormalMap_Object_Space_Step;
+                        roundBias = max(roundBias, 1);
+                        normalRGB = round(SAMPLE_TEXTURE2D(_NormalMap_Object_Space, sampler_MainTex, i.uv0) * roundBias) / roundBias;
+                    }
+                    else{
+                        normalRGB = SAMPLE_TEXTURE2D(_NormalMap_Object_Space, sampler_MainTex, i.uv0);
+                    }
+
+                    // nlerp
+                    // half3 normalOS = normalize(lerp(half3(-1, -1, -1), half3(1, 1, 1), normalRGB.xyz));
+
+                    // slerp
+                    half dot = -1; // clamp(dot(half3(-1, -1, -1), half3(1, 1, 1)), -1, 1);
+                    half3 theta = acos(dot) * normalRGB.xyz;
+                    half3 normalOS = normalize(-1 * cos(theta));
+
                     i.normalDir = TransformObjectToWorldNormal(normalOS);
                 }
 
@@ -113,6 +132,8 @@
                 float shadowAttenuation = 1.0;
 #if defined(_MAIN_LIGHT_SHADOWS) || defined(_MAIN_LIGHT_SHADOWS_CASCADE) || defined(_MAIN_LIGHT_SHADOWS_SCREEN)
                 shadowAttenuation = mainLight.shadowAttenuation;
+                // shadowAttenuation = 0;
+                // shadowAttenuation = step(0.5, mainLight.shadowAttenuation);
 
 # endif
 
@@ -127,6 +148,10 @@
                 float3 customLightDirection = normalize(mul( unity_ObjectToWorld, float4(((float3(1.0,0.0,0.0)*_Offset_X_Axis_BLD*10)+(float3(0.0,1.0,0.0)*_Offset_Y_Axis_BLD*10)+(float3(0.0,0.0,-1.0)*lerp(-1.0,1.0,_Inverse_Z_Axis_BLD))),0)).xyz);
                 float3 lightDirection = normalize(lerp(defaultLightDirection, mainLight.direction.xyz,any(mainLight.direction.xyz)));
                 lightDirection = lerp(lightDirection, customLightDirection, _Is_BLD);
+
+                // TODO: light bending
+                // i.normalDir = normalize(lerp(i.normalDir, lightDirection, .1));
+
                 //v.2.0.5: 
 
                 half3 originalLightColor = mainLightColor.rgb;
