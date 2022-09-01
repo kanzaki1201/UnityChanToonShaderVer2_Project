@@ -1453,6 +1453,9 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
                     {
                         EditorGUI.indentLevel++;
                         m_MaterialEditor.RangeProperty(normalMap_Object_Space_Step, "Color Step");
+                        
+                        // Core RP 12+
+                        // m_MaterialEditor.IntSliderShaderProperty(normalMap_Object_Space_Step,  new GUIContent("Color Step"));
                         EditorGUI.indentLevel--;
                     }
 
