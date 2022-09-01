@@ -7,6 +7,10 @@
         float4 fragShadingGradeMap(VertexOutput i, fixed facing : VFACE) : SV_TARGET
         {
 
+                if(_Show_Vertex_Color_Only){
+                    return i.vertexColor;
+                }
+
                 i.normalDir = normalize(i.normalDir);
 
                 if(_Use_NormalMap_Object_Space){
