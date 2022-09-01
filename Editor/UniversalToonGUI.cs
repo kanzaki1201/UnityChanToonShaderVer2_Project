@@ -91,7 +91,8 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
         const string ShaderPropIs_BLD = "_Is_BLD";
         const string ShaderPropInverse_Z_Axis_BLD = "_Inverse_Z_Axis_BLD";
 
-        const string ShaderPropUseNormalMapObjectSpace = "_Use_NormalMap_Object_Space";
+        const string ShaderPropNormalMapObjectSpaceUse = "_NormalMap_Object_Space_Use";
+        const string ShaderPropNormalMapObjectSpaceUseStep = "_NormalMap_Object_Space_Use_Step";
 
         const string ShaderPropShowVertexColorOnly = "_Show_Vertex_Color_Only";
         const string ShaderPropNormalMapObjectSpaceStep = "_NormalMap_Object_Space_Step";
@@ -1408,27 +1409,54 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
             if (_AdvancedFaceShadow_Foldout)
             {
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.PrefixLabel("Is Object Space");
+                EditorGUILayout.PrefixLabel("Object Space Normal Map");
                 //GUILayout.Space(60);
-                if (material.GetFloat(ShaderPropUseNormalMapObjectSpace) == 0)
+                if (material.GetFloat(ShaderPropNormalMapObjectSpaceUse) == 0)
                 {
                     if (GUILayout.Button(STR_OFFSTATE, shortButtonStyle))
                     {
-                        material.SetFloat(ShaderPropUseNormalMapObjectSpace, 1);
+                        material.SetFloat(ShaderPropNormalMapObjectSpaceUse, 1);
                     }
                 }
                 else
                 {
                     if (GUILayout.Button(STR_ONSTATE, shortButtonStyle))
                     {
-                        material.SetFloat(ShaderPropUseNormalMapObjectSpace, 0);
+                        material.SetFloat(ShaderPropNormalMapObjectSpaceUse, 0);
                     }
                 }
                 EditorGUILayout.EndHorizontal();
-                if (material.GetFloat(ShaderPropUseNormalMapObjectSpace) == 1)
+
+                if (material.GetFloat(ShaderPropNormalMapObjectSpaceUse) == 1)
                 {
+
+                    EditorGUI.indentLevel++;
                     m_MaterialEditor.TexturePropertySingleLine(Styles.NormalMap_Object_SpaceText, NormalMap_Object_Space);
-                    m_MaterialEditor.RangeProperty(normalMap_Object_Space_Step, "Color Step");
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.PrefixLabel("Color step");
+                    if (material.GetFloat(ShaderPropNormalMapObjectSpaceUseStep) == 0)
+                    {
+                        if (GUILayout.Button(STR_OFFSTATE, shortButtonStyle))
+                        {
+                            material.SetFloat(ShaderPropNormalMapObjectSpaceUseStep, 1);
+                        }
+                    }
+                    else
+                    {
+                        if (GUILayout.Button(STR_ONSTATE, shortButtonStyle))
+                        {
+                            material.SetFloat(ShaderPropNormalMapObjectSpaceUseStep, 0);
+                        }
+                    }
+                    EditorGUILayout.EndHorizontal();
+                    if (material.GetFloat(ShaderPropNormalMapObjectSpaceUseStep) == 1)
+                    {
+                        EditorGUI.indentLevel++;
+                        m_MaterialEditor.RangeProperty(normalMap_Object_Space_Step, "Color Step");
+                        EditorGUI.indentLevel--;
+                    }
+
+                    EditorGUI.indentLevel--;
                 }
 
                 EditorGUILayout.Space();

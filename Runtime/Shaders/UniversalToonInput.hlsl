@@ -28,12 +28,14 @@ float4 _NormalMap_ST;
 float4 _NormalMap_Object_Space_ST;
 
 fixed _Is_NormalMapToBase;
-fixed _Use_NormalMap_Object_Space;
+fixed _NormalMap_Object_Space_Use;
+fixed _NormalMap_Object_Space_Use_Step;
 fixed _Set_SystemShadowsToBase;
 float _Tweak_SystemShadowsLevel;
 float _BaseColor_Step;
 float _BaseShade_Feather;
 float _NormalMap_Object_Space_Step;
+
 
 float4 _Set_1st_ShadePosition_ST;
 float _ShadeColor_Step;

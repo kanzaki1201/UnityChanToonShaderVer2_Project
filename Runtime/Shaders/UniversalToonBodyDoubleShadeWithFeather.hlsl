@@ -15,14 +15,19 @@
                 i.normalDir = normalize(i.normalDir);
                 float3 viewDirection = normalize(_WorldSpaceCameraPos.xyz - i.posWorld.xyz);
 
-                if(_Use_NormalMap_Object_Space){
+                if(_NormalMap_Object_Space_Use){
                     
-                    // Prevent acne by biasing the coloring value
-                    int roundBias = _NormalMap_Object_Space_Step;
-                    roundBias = max(roundBias, 1);
-                    half4 normalRGB = round(SAMPLE_TEXTURE2D(_NormalMap_Object_Space, sampler_MainTex, i.uv0) * roundBias) / roundBias;
+                    half4 normalRGB = 1;
 
-                    // half4 normalRGB = SAMPLE_TEXTURE2D(_NormalMap_Object_Space, sampler_MainTex, i.uv0);
+                    // Prevent acne by biasing the coloring value
+                    if(_NormalMap_Object_Space_Use_Step){
+                        int roundBias = _NormalMap_Object_Space_Step;
+                        roundBias = max(roundBias, 1);
+                        normalRGB = round(SAMPLE_TEXTURE2D(_NormalMap_Object_Space, sampler_MainTex, i.uv0) * roundBias) / roundBias;
+                    }
+                    else{
+                        normalRGB = SAMPLE_TEXTURE2D(_NormalMap_Object_Space, sampler_MainTex, i.uv0);
+                    }
 
                     // nlerp
                     // half3 normalOS = normalize(lerp(half3(-1, -1, -1), half3(1, 1, 1), normalRGB.xyz));

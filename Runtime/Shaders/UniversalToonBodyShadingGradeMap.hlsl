@@ -13,7 +13,7 @@
 
                 i.normalDir = normalize(i.normalDir);
 
-                if(_Use_NormalMap_Object_Space){
+                if(_NormalMap_Object_Space_Use){
 
                     half4 normalRGB = SAMPLE_TEXTURE2D(_NormalMap_Object_Space, sampler_MainTex, i.uv0);
                     half3 normalOS = normalize(lerp(half3(-1, -1, -1), half3(1, 1, 1), normalRGB.xyz + half3(0, 0, 1) * 0));
