@@ -84,6 +84,7 @@ Shader "Universal Render Pipeline/Toon" {
         _SDF ("SDF", 2D) = "white" {}
         _HeadForward("Head Forward", Vector) = (0, 0, 1)
         _HeadRight("Head Right", Vector) = (1, 0, 0)
+        _HeadUp("Head Up", Vector) = (0, 1, 0)
         //v.2.0.4.4
         [Toggle(_)] _Set_SystemShadowsToBase ("Set_SystemShadowsToBase", Float ) = 1
         _Tweak_SystemShadowsLevel ("Tweak_SystemShadowsLevel", Range(-0.5, 0.5)) = 0

@@ -180,20 +180,22 @@ float4 fragDoubleShadeFeather(VertexOutput i, fixed facing : VFACE) : SV_TARGET
     if (_SDF_Use)
     {
         half2 lightDirXZ = normalize(lightDirection.xz);
-        half2 normalXZ = normalize(i.normalDir.xz);
-    
-        half nDotL = dot(normalXZ, lightDirXZ);
 
         half rightDotL = dot(normalize(_HeadRight.xz), lightDirXZ);
         half forwardDotL = dot(normalize(_HeadForward.xz), lightDirXZ);
+        half upDotL = dot(_HeadUp, lightDirection);
+    // half upDotL = _HeadUp.y * lightDirection.y;
+
+        int isLit = step(0, forwardDotL);
 
         half4 sdfRGB = SAMPLE_TEXTURE2D(_SDF, sampler_MainTex, i.uv0);
-        half sdf_val = rightDotL > 0 ? sdfRGB.r : sdfRGB.g;
+        half sdfXZ = rightDotL > 0 ? sdfRGB.r : sdfRGB.g;
+
+        half maskXZ = isLit * step(smoothstep(0, 1, abs(rightDotL)), sdfXZ);
+        half maskY =  step(smoothstep(0, 1, upDotL), sdfRGB.b);
 
         // sdfMainShadowMask = forwardDotL > 0 ? step(abs(rightDotL), sdf) : 0;
-        sdfMainShadowMask = forwardDotL > 0 ? step(smoothstep(0, 1, abs(rightDotL)), sdf_val) : 0;
-
-        // return half4(sdfMainShadowMask, 0, 0, 1); 
+        sdfMainShadowMask = max(maskXZ, maskY);
     }
 
     #ifdef _IS_PASS_FWDBASE

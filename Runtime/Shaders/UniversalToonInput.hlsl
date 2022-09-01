@@ -38,6 +38,7 @@ float _BaseShade_Feather;
 int _NormalMap_Object_Space_Step;
 float3 _HeadForward;
 float3 _HeadRight;
+float3 _HeadUp;
 
 
 float4 _Set_1st_ShadePosition_ST;
