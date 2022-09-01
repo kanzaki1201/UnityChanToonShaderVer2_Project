@@ -25,7 +25,7 @@ float4 _2nd_ShadeMap_ST;
 float4 _2nd_ShadeColor;
 fixed _Is_LightColor_2nd_Shade;
 float4 _NormalMap_ST;
-float4 _NormalMapOS_ST;
+float4 _NormalMap_Object_Space_ST;
 
 fixed _Is_NormalMapToBase;
 fixed _Use_NormalMap_Object_Space;
@@ -199,7 +199,7 @@ TEXTURE2D(_MainTex); SAMPLER(sampler_MainTex);
 TEXTURE2D(_1st_ShadeMap);
 TEXTURE2D(_2nd_ShadeMap);
 TEXTURE2D(_NormalMap);
-TEXTURE2D(_NormalMapOS);
+TEXTURE2D(_NormalMap_Object_Space);
 
 sampler2D _Set_1st_ShadePosition; 
 sampler2D _Set_2nd_ShadePosition;

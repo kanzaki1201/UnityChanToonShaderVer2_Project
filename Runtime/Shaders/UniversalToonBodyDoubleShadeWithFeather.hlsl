@@ -20,9 +20,9 @@
                     // Prevent acne by biasing the coloring value
                     int roundBias = _NormalMap_Object_Space_Step;
                     roundBias = max(roundBias, 1);
-                    half4 normalRGB = round(SAMPLE_TEXTURE2D(_NormalMapOS, sampler_MainTex, i.uv0) * roundBias) / roundBias;
+                    half4 normalRGB = round(SAMPLE_TEXTURE2D(_NormalMap_Object_Space, sampler_MainTex, i.uv0) * roundBias) / roundBias;
 
-                    // half4 normalRGB = SAMPLE_TEXTURE2D(_NormalMapOS, sampler_MainTex, i.uv0);
+                    // half4 normalRGB = SAMPLE_TEXTURE2D(_NormalMap_Object_Space, sampler_MainTex, i.uv0);
 
                     // nlerp
                     // half3 normalOS = normalize(lerp(half3(-1, -1, -1), half3(1, 1, 1), normalRGB.xyz));

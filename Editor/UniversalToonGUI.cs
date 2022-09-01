@@ -238,7 +238,7 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
         MaterialProperty secondShadeMap = null;
         MaterialProperty secondShadeColor = null;
         MaterialProperty normalMap = null;
-        MaterialProperty normalMapOS = null;
+        MaterialProperty NormalMap_Object_Space = null;
         MaterialProperty bumpScale = null;
         MaterialProperty set_1st_ShadePosition = null;
         MaterialProperty set_2nd_ShadePosition = null;
@@ -399,7 +399,7 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
             secondShadeMap = FindProperty("_2nd_ShadeMap", props);
             secondShadeColor = FindProperty("_2nd_ShadeColor", props);
             normalMap = FindProperty("_NormalMap", props);
-            normalMapOS = FindProperty("_NormalMapOS", props);
+            NormalMap_Object_Space = FindProperty("_NormalMap_Object_Space", props);
             normalMap_Object_Space_Step = FindProperty("_NormalMap_Object_Space_Step", props);
             bumpScale = FindProperty("_BumpScale", props);
             set_1st_ShadePosition = FindProperty("_Set_1st_ShadePosition", props, false);
@@ -547,7 +547,7 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
             public static GUIContent firstShadeColorText = new GUIContent("1st ShadeMap", "1st ShadeColor : Texture(sRGB) × Color(RGB) Default:White");
             public static GUIContent secondShadeColorText = new GUIContent("2nd ShadeMap", "2nd ShadeColor : Texture(sRGB) × Color(RGB) Default:White");
             public static GUIContent normalMapText = new GUIContent("NormalMap", "NormalMap : Texture(bump)");
-            public static GUIContent normalMapOSText = new GUIContent("NormalMap Object Space", "NormalMapObjectSpace : Texture");
+            public static GUIContent NormalMap_Object_SpaceText = new GUIContent("NormalMap Object Space", "NormalMapObjectSpace : Texture");
             public static GUIContent highColorText = new GUIContent("HighColor", "High Color : Texture(sRGB) × Color(RGB) Default:Black");
             public static GUIContent highColorMaskText = new GUIContent("HighColor Mask", "HighColor Mask : Texture(linear)");
             public static GUIContent rimLightMaskText = new GUIContent("RimLight Mask", "RimLight Mask : Texture(linear)");
@@ -1427,7 +1427,7 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
                 EditorGUILayout.EndHorizontal();
                 if (material.GetFloat(ShaderPropUseNormalMapObjectSpace) == 1)
                 {
-                    m_MaterialEditor.TexturePropertySingleLine(Styles.normalMapOSText, normalMapOS);
+                    m_MaterialEditor.TexturePropertySingleLine(Styles.NormalMap_Object_SpaceText, NormalMap_Object_Space);
                     m_MaterialEditor.RangeProperty(normalMap_Object_Space_Step, "Color Step");
                 }
 
