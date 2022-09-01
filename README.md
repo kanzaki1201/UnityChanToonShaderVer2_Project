@@ -1,12 +1,20 @@
 # 【UTS/UniversalToon Ver.2.5.1】
 ---
-<img width = "800" src="Documentation~/Images_jpg/UTS2_TopImage00.jpg">
-
-***Read this document in [日本語版](README_ja.md)***  
 
 ## This is Kanzaki's fork for making object space normal work lol
 ### TODO list:
  - [x] Object space normal
+ - [ ] Vertex color
+ - [ ] Use vertex color to control outline width
+ - [ ] Light layer URP support
+
+
+---
+<img width = "800" src="Documentation~/Images_jpg/UTS2_TopImage00.jpg">
+
+***Read this document in [日本語版](README_ja.md)***  
+
+---
 
 ## 【Overview : What is UTS/UniversalToon?】
 
