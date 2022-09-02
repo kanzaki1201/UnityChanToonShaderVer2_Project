@@ -30,6 +30,7 @@ float4 _NormalMap_Object_Space_ST;
 fixed _Is_NormalMapToBase;
 fixed _NormalMap_Object_Space_Use;
 fixed _SDF_Use;
+fixed _SDF_Dither_Use;
 fixed _NormalMap_Object_Space_Use_Step;
 fixed _Set_SystemShadowsToBase;
 float _Tweak_SystemShadowsLevel;
@@ -207,6 +208,7 @@ TEXTURE2D(_2nd_ShadeMap);
 TEXTURE2D(_NormalMap);
 TEXTURE2D(_NormalMap_Object_Space);
 TEXTURE2D(_SDF);
+TEXTURE2D(_SDF_Dither);
 
 sampler2D _Set_1st_ShadePosition; 
 sampler2D _Set_2nd_ShadePosition;

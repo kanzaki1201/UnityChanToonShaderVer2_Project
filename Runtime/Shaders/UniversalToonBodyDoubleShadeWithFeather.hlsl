@@ -179,23 +179,31 @@ float4 fragDoubleShadeFeather(VertexOutput i, fixed facing : VFACE) : SV_TARGET
     half sdfMainShadowMask = 1;
     if (_SDF_Use)
     {
-        half2 lightDirXZ = normalize(lightDirection.xz);
+        half3 lightDirXZ = normalize(half3(lightDirection.x, 0, lightDirection.z));
+        half3 lightDirYZ = normalize(half3(0, lightDirection.y, lightDirection.z));
 
-        half rightDotL = dot(normalize(_HeadRight.xz), lightDirXZ);
-        half forwardDotL = dot(normalize(_HeadForward.xz), lightDirXZ);
-        half upDotL = dot(_HeadUp, lightDirection);
-    // half upDotL = _HeadUp.y * lightDirection.y;
+        half rightDotL = dot(_HeadRight, lightDirXZ);
+        half forwardDotL = dot(_HeadForward, lightDirXZ);
+        half upDotL = dot(_HeadUp, lightDirYZ);
+        half fDotLyz = dot(_HeadForward, lightDirYZ);
 
-        int isLit = step(0, forwardDotL);
+        int isLitXZ = step(0, forwardDotL);
+        int isLitYZ = step(0, fDotLyz);
 
-        half4 sdfRGB = SAMPLE_TEXTURE2D(_SDF, sampler_MainTex, i.uv0);
-        half sdfXZ = rightDotL > 0 ? sdfRGB.r : sdfRGB.g;
+        half4 sdfRGBA = SAMPLE_TEXTURE2D(_SDF, sampler_MainTex, i.uv0);
+        half sdfXZ = rightDotL > 0 ? sdfRGBA.r : sdfRGBA.g;
+        half sdfYZ = upDotL < 0 ? sdfRGBA.b : 1 - sdfRGBA.b;
 
-        half maskXZ = isLit * step(smoothstep(0, 1, abs(rightDotL)), sdfXZ);
-        half maskY =  step(smoothstep(0, 1, upDotL), sdfRGB.b);
+        half maskXZ = isLitXZ * step(smoothstep(0, 1, abs(rightDotL)), sdfXZ);
+        half maskY =  step(lerp(1, 0, fDotLyz), sdfYZ) * isLitYZ;
 
-        // sdfMainShadowMask = forwardDotL > 0 ? step(abs(rightDotL), sdf) : 0;
-        sdfMainShadowMask = max(maskXZ, maskY);
+        sdfMainShadowMask = maskXZ * maskY;
+    }
+    
+    if(_SDF_Dither_Use){
+        half4 sdfRGBA = SAMPLE_TEXTURE2D(_SDF_Dither, sampler_MainTex, i.uv0);
+        // return sdfRGBA;
+
     }
 
     #ifdef _IS_PASS_FWDBASE

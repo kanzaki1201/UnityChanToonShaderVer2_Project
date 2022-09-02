@@ -94,6 +94,7 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
         const string ShaderPropNormalMapObjectSpaceUse = "_NormalMap_Object_Space_Use";
         const string ShaderPropNormalMapObjectSpaceUseStep = "_NormalMap_Object_Space_Use_Step";
         const string ShaderPropSdfUse = "_SDF_Use";
+        const string ShaderPropSdfDitherUse = "_SDF_Dither_Use";
 
         const string ShaderPropShowVertexColorOnly = "_Show_Vertex_Color_Only";
         const string ShaderPropNormalMapObjectSpaceStep = "_NormalMap_Object_Space_Step";
@@ -242,6 +243,7 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
         MaterialProperty normalMap = null;
         MaterialProperty NormalMap_Object_Space = null;
         MaterialProperty SDF = null;
+        MaterialProperty SDF_Dither = null;
         MaterialProperty bumpScale = null;
         MaterialProperty set_1st_ShadePosition = null;
         MaterialProperty set_2nd_ShadePosition = null;
@@ -404,6 +406,7 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
             normalMap = FindProperty("_NormalMap", props);
             NormalMap_Object_Space = FindProperty("_NormalMap_Object_Space", props);
             SDF = FindProperty("_SDF", props);
+            SDF_Dither = FindProperty("_SDF_Dither", props);
             normalMap_Object_Space_Step = FindProperty("_NormalMap_Object_Space_Step", props);
             bumpScale = FindProperty("_BumpScale", props);
             set_1st_ShadePosition = FindProperty("_Set_1st_ShadePosition", props, false);
@@ -553,6 +556,7 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
             public static GUIContent normalMapText = new GUIContent("NormalMap", "NormalMap : Texture(bump)");
             public static GUIContent normalMapObjectSpaceText = new GUIContent("NormalMap Object Space", "NormalMapObjectSpace : Texture(linear)");
             public static GUIContent sdfText = new GUIContent("SDF", "SDF : Texture(linear)");
+            public static GUIContent sdfDitherText = new GUIContent("SDF Dither", "SDF Dither: Texture(linear)");
             public static GUIContent highColorText = new GUIContent("HighColor", "High Color : Texture(sRGB) × Color(RGB) Default:Black");
             public static GUIContent highColorMaskText = new GUIContent("HighColor Mask", "HighColor Mask : Texture(linear)");
             public static GUIContent rimLightMaskText = new GUIContent("RimLight Mask", "RimLight Mask : Texture(linear)");
@@ -1417,6 +1421,10 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
 
                 GUI_SDF(material);
                 EditorGUILayout.Space();
+
+
+                GUI_SDF_Dither(material);
+                EditorGUILayout.Space();
             }
         }
 
@@ -1506,6 +1514,65 @@ namespace UnityEditor.Rendering.Universal.Toon.ShaderGUI
 
                 EditorGUI.indentLevel++;
                 m_MaterialEditor.TexturePropertySingleLine(Styles.sdfText, SDF);
+                // EditorGUILayout.BeginHorizontal();
+                // EditorGUILayout.PrefixLabel("Color step");
+                // if (material.GetFloat(ShaderPropNormalMapObjectSpaceUseStep) == 0)
+                // {
+                //     if (GUILayout.Button(STR_OFFSTATE, shortButtonStyle))
+                //     {
+                //         material.SetFloat(ShaderPropNormalMapObjectSpaceUseStep, 1);
+                //     }
+                // }
+                // else
+                // {
+                //     if (GUILayout.Button(STR_ONSTATE, shortButtonStyle))
+                //     {
+                //         material.SetFloat(ShaderPropNormalMapObjectSpaceUseStep, 0);
+                //     }
+                // }
+                // EditorGUILayout.EndHorizontal();
+                // if (material.GetFloat(ShaderPropNormalMapObjectSpaceUseStep) == 1)
+                // {
+                //     EditorGUI.indentLevel++;
+                //     m_MaterialEditor.RangeProperty(normalMap_Object_Space_Step, "Color Step");
+
+                //     // Core RP 12+
+                //     // m_MaterialEditor.IntSliderShaderProperty(normalMap_Object_Space_Step,  new GUIContent("Color Step"));
+                //     EditorGUI.indentLevel--;
+                // }
+
+                EditorGUI.indentLevel--;
+            }
+
+
+        }
+
+        void GUI_SDF_Dither(Material material)
+        {
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.PrefixLabel("SDF Dither");
+            //GUILayout.Space(60);
+            if (material.GetFloat(ShaderPropSdfDitherUse) == 0)
+            {
+                if (GUILayout.Button(STR_OFFSTATE, shortButtonStyle))
+                {
+                    material.SetFloat(ShaderPropSdfDitherUse, 1);
+                }
+            }
+            else
+            {
+                if (GUILayout.Button(STR_ONSTATE, shortButtonStyle))
+                {
+                    material.SetFloat(ShaderPropSdfDitherUse, 0);
+                }
+            }
+            EditorGUILayout.EndHorizontal();
+
+            if (material.GetFloat(ShaderPropSdfDitherUse) == 1)
+            {
+
+                EditorGUI.indentLevel++;
+                m_MaterialEditor.TexturePropertySingleLine(Styles.sdfDitherText, SDF_Dither);
                 // EditorGUILayout.BeginHorizontal();
                 // EditorGUILayout.PrefixLabel("Color step");
                 // if (material.GetFloat(ShaderPropNormalMapObjectSpaceUseStep) == 0)

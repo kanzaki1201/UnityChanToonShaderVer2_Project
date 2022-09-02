@@ -9,9 +9,8 @@
  - [ ] Light layer URP support
  - [ ] Signed Distance Field
     - [x] XZ axis support
-    - [ ] Y axis support
-        - Partially done but results are bad
-        - [ ] Use blue together with alpha instead of just alpha
+    - [x] Y axis support
+        - ~~[ ] Use blue together with alpha instead of just alpha~~
     - [ ] Dither map
     - [ ] Use together with object space normal (Dither map)
 

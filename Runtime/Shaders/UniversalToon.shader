@@ -81,7 +81,9 @@ Shader "Universal Render Pipeline/Toon" {
         _NormalMap_Object_Space ("NormalMap_Object_Space", 2D) = "white" {}
         _NormalMap_Object_Space_Step ("NormalMap_Object_Space_Step", Range(100, 1)) = 10
         [Toggle(_)] _SDF_Use ("SDF_Use", Float ) = 0
+        [Toggle(_)] _SDF_Dither_Use ("SDF_Dither_Use", Float ) = 0
         _SDF ("SDF", 2D) = "white" {}
+        _SDF_Dither ("SDF_Dither", 2D) = "white" {}
         _HeadForward("Head Forward", Vector) = (0, 0, 1)
         _HeadRight("Head Right", Vector) = (1, 0, 0)
         _HeadUp("Head Up", Vector) = (0, 1, 0)
