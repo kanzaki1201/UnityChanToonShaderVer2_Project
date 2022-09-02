@@ -4,10 +4,16 @@
 ## This is Kanzaki's fork for making object space normal work lol
 ### TODO list:
  - [x] Object space normal
- - [ ] Vertex color
+ - [x] Vertex color
  - [ ] Use vertex color to control outline width
  - [ ] Light layer URP support
-
+ - [ ] Signed Distance Field
+    - [x] XZ axis support
+    - [ ] Y axis support
+        - Partially done but results are bad
+        - [ ] Use blue together with alpha instead of just alpha
+    - [ ] Dither map
+    - [ ] Use together with object space normal (Dither map)
 
 ---
 <img width = "800" src="Documentation~/Images_jpg/UTS2_TopImage00.jpg">
